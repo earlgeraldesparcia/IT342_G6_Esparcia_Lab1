@@ -33,7 +33,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       const response = await authAPI.login({ username, password });
-      const { token, ...userData } = response.data;
+      const { token, type, ...userData } = response.data;
+      
+      if (!token) {
+        return {
+          success: false,
+          message: 'Invalid response from server',
+        };
+      }
       
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
@@ -43,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || 'Login failed. Please try again.',
+        message: error.response?.data?.error || error.response?.data?.message || 'Login failed. Please try again.',
       };
     }
   };

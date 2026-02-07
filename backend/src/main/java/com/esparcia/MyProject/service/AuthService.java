@@ -44,11 +44,9 @@ public class AuthService {
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .role("USER")
-                .enabled(true)
                 .build();
 
         return userRepository.save(user);
@@ -76,10 +74,9 @@ public class AuthService {
         return LoginResponse.builder()
                 .token(jwt)
                 .type("Bearer")
-                .id(user.getId())
+                .userId(user.getUserId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .role(user.getRole())
                 .build();
     }
 }
