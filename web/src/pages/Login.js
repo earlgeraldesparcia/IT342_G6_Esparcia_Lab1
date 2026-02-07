@@ -47,21 +47,25 @@ const Login = () => {
 
     setLoading(true);
 
-    const result = await login(formData.username, formData.password);
+    try {
+      const result = await login(formData.username, formData.password);
 
-    if (result.success) {
-      navigate('/dashboard');
-    } else {
-      setError(result.message);
+      if (result.success) {
+        navigate('/dashboard', { replace: true });
+      } else {
+        setError(result.message);
+      }
+    } catch (error) {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2>Welcome Back</h2>
+        <h2>Sign In</h2>
         <form onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           {successMessage && <div className="success-message">{successMessage}</div>}

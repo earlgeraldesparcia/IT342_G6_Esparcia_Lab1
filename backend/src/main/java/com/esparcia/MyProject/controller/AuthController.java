@@ -29,7 +29,7 @@ public class AuthController {
             
             Map<String, Object> response = new HashMap<>();
             response.put("message", "User registered successfully");
-            response.put("userId", user.getId());
+            response.put("userId", user.getUserId());
             response.put("username", user.getUsername());
             
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
