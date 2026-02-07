@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+.vs/
+node_modules/
+bin/
+obj/
+*.user
